@@ -1,0 +1,120 @@
+﻿@model ChatbotDashboard.Models.Chatbots
+@{
+    ViewBag.Title = "ChatbotList1";
+    //WebGrid grid = new WebGrid(Model.chatbots);
+}
+
+
+
+<h2>List of Chatbots</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+@*@grid.GetHtml(columns: new[]
+            {
+        grid.Column("Name"),
+        grid.Column("Status")
+    })*@
+
+
+
+
+
+@using (Html.BeginForm("ChatbotList1", "Chatbot", FormMethod.Post, new { id = "Form1" }))
+{
+    @Html.Label("Filter By Status:")
+    @Html.DropDownList("Status", (IEnumerable<SelectListItem>)Model.ChatbotsStatus, "All", new { @id = "ddlStatus" })
+
+    @Html.Label("Search By Name:")
+
+    @Html.TextBox("Search", "", new { @id = "txt_name" })
+}
+
+@*@using (Ajax.BeginForm("ChatbotList1", "Chatbot", new AjaxOptions { HttpMethod = "Post", OnSuccess = "success", UpdateTargetId = "tbl_chat" }, new { @id = "Form1" }))
+    {
+        @Html.DropDownList("Status", (IEnumerable<SelectListItem>)Model.ChatbotsStatus, new { @id = "ddlStatus" })
+    }*@
+
+@*@Html.Partial("_chatbotList")*@
+
+@*@{
+        var status = "";
+        if (TempData["ddlstatus"]==null)
+        {
+            status = "All";
+
+        }
+        else
+        {
+            status = TempData["ddlstatus"].ToString();
+
+        }
+    }*@
+<table class="table" id="tbl_chat">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.chatbots)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChatbotsStatus)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.chatbots)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @if (item.Status == "Running")
+                {
+                    @Html.ActionLink("Stop", "ChangeStatus", new {  id=item.Name })
+                }
+                else
+                {
+                    @Html.ActionLink("Start", "ChangeStatus", new {  id=item.Name })
+                }
+                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#ddlStatus").val(window.sessionStorage.getItem("Status"));
+        $("#txt_name").val(window.sessionStorage.getItem("Search"));
+        //$("#ddlStatus").val() = status;
+    });
+    $("body").on("change", "#ddlStatus", function () {
+        window.sessionStorage.setItem("Status", this.value);
+        $('#Form1').submit();
+
+    });
+
+    $("body").on("change", "#txt_name", function () {
+        window.sessionStorage.setItem("Search", this.value);
+        $('#Form1').submit();
+
+    });
+
+    $("body").on("click", ".Grid tfoot a", function () {
+        $('#WebGridForm').attr('action', $(this).attr('href')).submit();
+        return false;
+    });
+</script>
+

@@ -1,0 +1,21 @@
+﻿@model ChatbotDashboard.Models.ChatbotStatus
+@{
+    ViewBag.Title = "bindDropdown";
+}
+
+<h2>bindDropdown</h2>
+
+
+@using (Html.BeginForm("FilterByStatus", "Chatbot", FormMethod.Post, new { id = "Form1" }))
+{
+    @Html.DropDownList("Status", Model.lstStatus, "--Select--", new { @id = "ddlStatus", onchange = "this.form.submit();" });
+
+}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    //$("body").on("change", "#ddlStatus", function () {
+    //    $('#Form1')[0].submit();
+    //});
+    
+</script>
+

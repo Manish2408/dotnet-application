@@ -1,0 +1,32 @@
+﻿@model ChatbotDashboard.Models.Chatbots
+
+<table class="table" id="tbl_chat">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.chatbots)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChatbotsStatus)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.chatbots)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>
+
